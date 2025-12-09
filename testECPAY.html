@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <title>ECPay 測試前端</title>
+</head>
+<body>
+  <h2>ECPay 測試前端</h2>
+
+  <button id="btnPing">測試連線</button>
+  <pre id="pingResult"></pre>
+
+  <hr />
+
+  <label>金額：<input id="amount" type="number" value="50" /></label>
+  <label>商品名稱：<input id="item" type="text" value="測試商品x1" /></label>
+  <label>敘述：<input id="desc" type="text" value="API 測試訂單" /></label>
+  <br /><br />
+  <button id="btnCheckout">建立訂單並前往綠界</button>
+
+  <script>
+    // ← 把這裡換成你 API 的 Origin（例如 http://localhost:5086）
+    // const apiBase = location.origin;
+    const apiBase = "https://localhost:7273";
+
+    // 測試連線
+    document.getElementById('btnPing').onclick = async () => {
+      const r = await fetch(`${apiBase}/api/ecpay/ping`);
+      const j = await r.json();
+      document.getElementById('pingResult').textContent = JSON.stringify(j, null, 2);
+    };
+
+    // 建立訂單並前往綠界
+    document.getElementById('btnCheckout').onclick = async () => {
+      const body = {
+        amount: parseInt(document.getElementById('amount').value || '50', 10),
+        itemName: document.getElementById('item').value || '測試商品x1',
+        tradeDesc: document.getElementById('desc').value || 'API 測試訂單'
+        // ReturnURL / OrderResultURL / ClientBackURL 不填就由後端自動產
+      };
+      const r = await fetch(`${apiBase}/api/ecpay/checkout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const j = await r.json();
+
+      // 用回傳 JSON 組 form 並送出
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = j.actionUrl;
+      Object.entries(j.fields).forEach(([k, v]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = k;
+        input.value = v;
+        form.appendChild(input);
+      });
+      document.body.appendChild(form);
+      form.submit();
+    };
+  </script>
+</body>
+</html>
