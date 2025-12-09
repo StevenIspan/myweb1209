@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>轉職之路｜從第一個網頁到專業工程師</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* ====== 全站基本設定 ====== */
+        :root {
+            --primary: #6366f1;
+            --primary-soft: #eef2ff;
+            --accent: #f97316;
+            --bg: #0f172a;
+            --card-bg: #0b1220;
+            --text-main: #e5e7eb;
+            --text-sub: #9ca3af;
+            --border-soft: rgba(148, 163, 184, 0.3);
+            --radius-lg: 16px;
+            --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.7);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top left, #1d2438 0, #020617 45%, #000 100%);
+            color: var(--text-main);
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* ====== 頂部導覽列 ====== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: blur(18px);
+            background: linear-gradient(to bottom, rgba(15,23,42,0.95), rgba(15,23,42,0.6), transparent);
+            border-bottom: 1px solid rgba(148,163,184,0.25);
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 10px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-logo span {
+            font-size: 20px;
+        }
+
+        .nav-logo-badge {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(148,163,184,0.8);
+            color: var(--text-sub);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            font-size: 14px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-sub);
+            padding: 4px 0;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #4f46e5, #22c55e, #f97316);
+            border-radius: 999px;
+            transition: width 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #e5e7eb;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .nav-cta {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 13px;
+                padding: 7px 14px;
+                border-radius: 999px;
+                background: radial-gradient(circle at top left, #4f46e5, #7c3aed);
+                border: 1px solid rgba(191,219,254,0.5);
+                box-shadow: 0 0 20px rgba(129,140,248,0.4);
+                cursor: pointer;
+                text-decoration: none;
+            }
+        }
+
+        /* ====== 版心容器 ====== */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 18px 60px;
+        }
+
+        /* ====== Hero 區 ====== */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 32px;
+            align-items: center;
+            padding: 35px 0 20px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148,163,184,0.7);
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .hero-badge span {
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(56,189,248,0.2);
+            color: #7dd3fc;
+            font-size: 11px;
+        }
+
+        .hero-title {
+            font-size: clamp(28px, 3vw, 34px);
+            line-height: 1.25;
+            margin: 16px 0 10px;
+        }
+
+        .hero-title span {
+            background: linear-gradient(90deg, #a5b4fc, #f9a8d4, #facc15);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            color: var(--text-sub);
+            line-height: 1.6;
+            max-width: 480px;
+        }
+
+        .hero-cta-group {
+            margin-top: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            padding: 10px 20px;
+            border-radius: 999px;
+            border: none;
+            background: linear-gradient(120deg, #6366f1, #22c55e);
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            box-shadow: 0 18px 40px rgba(79,70,229,0.5);
+        }
+
+        .btn-ghost {
+            padding: 9px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(148,163,184,0.7);
+            background: transparent;
+            color: var(--text-sub);
+            cursor: pointer;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .hero-tags {
+            margin-top: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 11px;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(148,163,184,0.4);
+            color: var(--text-sub);
+            background: rgba(15,23,42,0.7);
+        }
+
+        .hero-card {
+            background: radial-gradient(circle at top left, #1e293b, #020617);
+            border-radius: 18px;
+            padding: 18px 18px 16px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(148,163,184,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            background:
+                radial-gradient(circle at 0 0, rgba(129,140,248,0.18) 0, transparent 52%),
+                radial-gradient(circle at 100% 100%, rgba(248,250,252,0.06) 0, transparent 55%);
+            opacity: 0.8;
+        }
+
+        .hero-card-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .mini-title {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-bottom: 4px;
+        }
+
+        .level-now,
+        .level-future {
+            border-radius: 14px;
+            padding: 12px;
+            border: 1px solid rgba(148,163,184,0.5);
+            background: rgba(15,23,42,0.8);
+            margin-top: 6px;
+        }
+
+        .level-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #a5b4fc;
+            margin-bottom: 4px;
+        }
+
+        .level-text {
+            font-size: 13px;
+        }
+
+        .level-now {
+            opacity: 0.9;
+        }
+
+        .level-future {
+            margin-top: 10px;
+            border-color: rgba(96,165,250,0.8);
+            background: linear-gradient(120deg, rgba(88,28,135,0.85), rgba(30,64,175,0.9));
+        }
+
+        .level-future .level-label {
+            color: #facc15;
+        }
+
+        .hero-stat-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+            font-size: 11px;
+        }
+
+        .hero-stat {
+            flex: 1;
+            padding: 6px 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(148,163,184,0.7);
+            background: rgba(15,23,42,0.7);
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .hero-stat-label {
+            color: var(--text-sub);
+        }
+
+        .hero-stat-value {
+            font-size: 13px;
+        }
+
+        @media (max-width: 799px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 24px;
+            }
+        }
+
+        /* ====== 區塊標題 ====== */
+        .section {
+            margin-top: 40px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+
+        .section-subtitle {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-bottom: 18px;
+        }
+
+        /* ====== 現在 vs 完成課程後 ====== */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        @media (max-width: 799px) {
+            .compare-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 18px 18px 16px;
+            border: 1px solid var(--border-soft);
+            box-shadow: 0 14px 35px rgba(15,23,42,0.85);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 15px;
+        }
+
+        .chip {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(148,163,184,0.8);
+            color: var(--text-sub);
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 8px 0 0;
+            font-size: 13px;
+            color: var(--text-sub);
+        }
+
+        .bullet-list li {
+            margin-bottom: 4px;
+            display: flex;
+            gap: 6px;
+        }
+
+        .bullet-dot {
+            font-size: 10px;
+            margin-top: 3px;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .tag-soft {
+            font-size: 11px;
+            padding: 3px 9px;
+            border-radius: 999px;
+            background: rgba(55,65,81,0.8);
+            color: #e5e7eb;
+        }
+
+        .tag-soft-highlight {
+            background: radial-gradient(circle at top left, #4f46e5, #22c55e);
+        }
+
+        /* ====== 作品展示區 ====== */
+        .grid-works {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        @media (max-width: 999px) {
+            .grid-works {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            .grid-works {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .work-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 14px;
+            border: 1px solid rgba(148,163,184,0.6);
+            background: radial-gradient(circle at top left, rgba(129,140,248,0.2), rgba(15,23,42,0.98));
+            padding: 12px 12px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .work-label {
+            font-size: 11px;
+            color: var(--text-sub);
+        }
+
+        .work-title {
+            font-size: 14px;
+        }
+
+        .work-tech {
+            font-size: 11px;
+            color: var(--text-sub);
+        }
+
+        .work-pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .pill {
+            font-size: 10px;
+            padding: 3px 7px;
+            border-radius: 999px;
+            border: 1px solid rgba(148,163,184,0.7);
+            background: rgba(15,23,42,0.7);
+        }
+
+        /* ====== 課程技能地圖 ====== */
+        .skill-map {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 799px) {
+            .skill-map {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .timeline {
+            border-left: 2px solid rgba(148,163,184,0.5);
+            padding-left: 14px;
+            margin-left: 4px;
+        }
+
+        .timeline-item {
+            margin-bottom: 14px;
+            position: relative;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -15px;
+            top: 3px;
+            width: 9px;
+            height: 9px;
+            border-radius: 999px;
+            background: #4f46e5;
+            box-shadow: 0 0 0 4px rgba(79,70,229,0.4);
+        }
+
+        .timeline-title {
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+
+        .timeline-text {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .track-card {
+            border-radius: 14px;
+            padding: 12px;
+            border: 1px solid rgba(148,163,184,0.6);
+            background: radial-gradient(circle at top, rgba(15,118,110,0.5), rgba(15,23,42,0.97));
+            margin-bottom: 10px;
+        }
+
+        .track-card:nth-child(2) {
+            background: radial-gradient(circle at top, rgba(30,64,175,0.7), rgba(15,23,42,0.97));
+        }
+
+        .track-title {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .track-desc {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-bottom: 6px;
+        }
+
+        .track-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .track-tag {
+            font-size: 10px;
+            padding: 3px 7px;
+            border-radius: 999px;
+            background: rgba(15,23,42,0.7);
+            border: 1px solid rgba(148,163,184,0.7);
+        }
+
+        /* ====== 聯絡區 / Footer ====== */
+        .contact-card {
+            margin-top: 28px;
+            padding: 16px 18px;
+            border-radius: 16px;
+            border: 1px solid rgba(148,163,184,0.6);
+            background: linear-gradient(120deg, rgba(30,64,175,0.95), rgba(8,47,73,0.96));
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .contact-text-main {
+            font-size: 15px;
+        }
+
+        .contact-text-sub {
+            font-size: 12px;
+            color: #bfdbfe;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-top: 18px;
+            padding-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 導覽列 -->
+    <header class="navbar">
+        <div class="nav-inner">
+            <div class="nav-logo">
+                <span>🚀 轉職工程師計畫</span>
+                <span class="nav-logo-badge">從零開始也可以</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#now">現在的你</a>
+                <a href="#future">完成課程後</a>
+                <a href="#works">作品展示</a>
+                <a href="#skills">技能地圖</a>
+            </nav>
+            <a href="#contact" class="nav-cta">我要加入 <span>→</span></a>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Hero 區 -->
+        <section class="hero">
+            <div>
+                <div class="hero-badge">
+                    轉職小白專屬路線
+                    <span>1 小時體驗課 → 完整培訓</span>
+                </div>
+                <h1 class="hero-title">
+                    從 <span>第一個 HTML 網頁</span> 出發，走到能做出完整專題的工程師。
+                </h1>
+                <p class="hero-subtitle">
+                    現在只會開瀏覽器沒關係。從今天開始，你會寫出自己的第一個網站頁面，
+                    在完整課程中一步步學會前端、後端、資料庫、雲端與 AI，最後帶著作品與能力去面試。
+                </p>
+                <div class="hero-cta-group">
+                    <a href="#future" class="btn-primary">看看完成課程後的樣子 ✨</a>
+                    <a href="#works" class="btn-ghost">我想先看看作品範例</a>
+                </div>
+                <div class="hero-tags">
+                    <div class="tag">適合完全沒基礎</div>
+                    <div class="tag">全端班 / Java 班 系統化學習</div>
+                    <div class="tag">專題製作＋就業媒合</div>
+                </div>
+            </div>
+
+            <aside class="hero-card">
+                <div class="hero-card-inner">
+                    <div class="mini-title">轉職前後差異一目了然</div>
+                    <div class="level-now">
+                        <div class="level-label">現在的我</div>
+                        <div class="level-text">
+                            🐣 只會用網頁，不知道程式在做什麼。<br>
+                            🐣 不知道自己適不適合工程師。
+                        </div>
+                    </div>
+                    <div class="level-future">
+                        <div class="level-label">完成課程之後</div>
+                        <div class="level-text">
+                            ✅ 能做出含前端、後端、資料庫的完整專題網站。<br>
+                            ✅ 看得懂程式、會 debug、敢跟工程師對話與面試。
+                        </div>
+                    </div>
+                    <div class="hero-stat-row">
+                        <div class="hero-stat">
+                            <div class="hero-stat-label">學習主軸</div>
+                            <div class="hero-stat-value">全端 / Java 兩大路線</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-label">結訓成果</div>
+                            <div class="hero-stat-value">個人作品集＋專題發表</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </section>
+
+        <!-- 現在 vs 完成課程之後 -->
+        <section id="now" class="section">
+            <h2 class="section-title">現在的你 vs 完成課程後的你</h2>
+            <p class="section-subtitle">
+                這不是一堂單純的體驗課，而是一條完整的轉職路線。現在在哪裡不重要，重點是你願不願意開始。
+            </p>
+
+            <div class="compare-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">現在的我</h3>
+                        <span class="chip">Before</span>
+                    </div>
+                    <ul class="bullet-list">
+                        <li><span class="bullet-dot">•</span> 只聽過 HTML、Java、C#，但不知道有什麼差別。</li>
+                        <li><span class="bullet-dot">•</span> 看很多資源，卻不知道從哪裡開始學。</li>
+                        <li><span class="bullet-dot">•</span> 想轉職工程師，但怕自己沒有天份、怕跟不上。</li>
+                        <li><span class="bullet-dot">•</span> 沒有可以拿去面試的作品，只能投履歷碰運氣。</li>
+                    </ul>
+                    <div class="tag-row">
+                        <span class="tag-soft">非本科 / 非相關科系</span>
+                        <span class="tag-soft">零基礎</span>
+                        <span class="tag-soft">職涯方向不確定</span>
+                    </div>
+                </div>
+
+                <div class="card" id="future">
+                    <div class="card-header">
+                        <h3 class="card-title">完成課程後的我</h3>
+                        <span class="chip">After</span>
+                    </div>
+                    <ul class="bullet-list">
+                        <li><span class="bullet-dot">•</span> 能獨立完成前端頁面，串接後端 API 與資料庫。</li>
+                        <li><span class="bullet-dot">•</span> 熟悉 Git 版控，會與團隊協作開發。</li>
+                        <li><span class="bullet-dot">•</span> 了解雲端部署流程（Azure），知道如何把作品放上線。</li>
+                        <li><span class="bullet-dot">•</span> 擁有專題作品與作品集，能在面試中清楚展示實力。</li>
+                    </ul>
+                    <div class="tag-row">
+                        <span class="tag-soft tag-soft-highlight">全端班 / Java 班 完整訓練</span>
+                        <span class="tag-soft">專題製作</span>
+                        <span class="tag-soft">企業參訪＆就業媒合</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 作品展示 -->
+        <section id="works" class="section">
+            <h2 class="section-title">完成課程後，你能做出這樣的作品</h2>
+            <p class="section-subtitle">
+                下面每一張卡片，都可以是一份放在履歷上的專案：前端畫面、後端邏輯、資料庫設計、雲端部署與 AI 應用。
+            </p>
+
+            <div class="grid-works">
+                <article class="work-card">
+                    <div class="work-label">全端班 專題範例</div>
+                    <div class="work-title">會員登入＋訂單管理的購物網站</div>
+                    <div class="work-tech">C#、ASP.NET MVC、SQL Server、JavaScript、Restful API、Vue.js</div>
+                    <div class="work-pill-row">
+                        <span class="pill">會員系統</span>
+                        <span class="pill">後台管理</span>
+                        <span class="pill">前後端分離</span>
+                    </div>
+                </article>
+
+                <article class="work-card">
+                    <div class="work-label">Java 班 專題範例</div>
+                    <div class="work-title">線上課程平台</div>
+                    <div class="work-tech">Java、Spring Boot、Spring MVC、Vue.js、REST API、Azure</div>
+                    <div class="work-pill-row">
+                        <span class="pill">課程列表與報名</span>
+                        <span class="pill">後端 API 設計</span>
+                        <span class="pill">雲端部署</span>
+                    </div>
+                </article>
+
+                <article class="work-card">
+                    <div class="work-label">AI 應用示範</div>
+                    <div class="work-title">AI 圖像 & 語言輔助客服系統</div>
+                    <div class="work-tech">AI 圖像 API、AI 語言模型、前端 Vue.js 介面、Azure 認知服務</div>
+                    <div class="work-pill-row">
+                        <span class="pill">AI 圖像辨識</span>
+                        <span class="pill">智慧客服</span>
+                        <span class="pill">API 串接</span>
+                    </div>
+                </article>
+
+                <article class="work-card">
+                    <div class="work-label">Java 班 DevOps</div>
+                    <div class="work-title">自動部署的 Java Web 專案</div>
+                    <div class="work-tech">Java、Spring Boot、Docker、Jenkins、Git</div>
+                    <div class="work-pill-row">
+                        <span class="pill">CI/CD 流程</span>
+                        <span class="pill">自動 build & 部署</span>
+                        <span class="pill">團隊開發</span>
+                    </div>
+                </article>
+
+                <article class="work-card">
+                    <div class="work-label">全端班 前端作品</div>
+                    <div class="work-title">互動式個人作品集網站</div>
+                    <div class="work-tech">HTML、CSS、JavaScript、Vue.js、RWD 響應式設計</div>
+                    <div class="work-pill-row">
+                        <span class="pill">手機＋桌機都好看</span>
+                        <span class="pill">動畫效果</span>
+                        <span class="pill">串接 API</span>
+                    </div>
+                </article>
+
+                <article class="work-card">
+                    <div class="work-label">綜合實戰專題</div>
+                    <div class="work-title">企業內部管理系統</div>
+                    <div class="work-tech">C# 或 Java、SQL Server、Restful API、前端框架、Azure</div>
+                    <div class="work-pill-row">
+                        <span class="pill">實際商業情境</span>
+                        <span class="pill">資料庫設計</span>
+                        <span class="pill">權限管理</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- 課程技能地圖 -->
+        <section id="skills" class="section">
+            <h2 class="section-title">課程技能地圖：從小白到可以上線專案</h2>
+            <p class="section-subtitle">
+                不需要你自己摸索，我們已經幫你排好路線。你需要做的，是一步一步跟上來。
+            </p>
+
+            <div class="skill-map">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">學習路線 Timeline</h3>
+                        <span class="chip">學習順序示意</span>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-title">階段一：打底（你現在所在的地方）</div>
+                            <div class="timeline-text">
+                                HTML、CSS、基礎 JavaScript、版本控管（Git），了解網頁是怎麼組成的。
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-title">階段二：進階網頁與後端入門</div>
+                            <div class="timeline-text">
+                                全端班：C#、.NET、ADO.NET、LINQ、ASP.NET MVC。<br>
+                                Java 班：Java 入門到進階、Spring Boot、Spring MVC。
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-title">階段三：前後端整合＋資料庫</div>
+                            <div class="timeline-text">
+                                微軟 SQL Server 資料庫設計與開發實務、Restful API、Ajax、前端 Vue.js 串接 API。
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-title">階段四：AI 與雲端＋專題實作</div>
+                            <div class="timeline-text">
+                                AI 圖像應用、AI 語言技術實作、Azure 認知服務、Azure 雲端建置與管理，
+                                最後完成專題製作與發表，搭配企業參訪、職場講座與就業媒合。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="track-card">
+                        <div class="track-title">全端班路線</div>
+                        <div class="track-desc">
+                            從 C#、.NET、生態系出發，適合想做企業內部系統、後台管理系統、各種 Web 工程。
+                        </div>
+                        <div class="track-tags">
+                            <span class="track-tag">C# 程式設計</span>
+                            <span class="track-tag">.NET 元件開發</span>
+                            <span class="track-tag">ASP.NET MVC</span>
+                            <span class="track-tag">Restful API + Ajax</span>
+                            <span class="track-tag">Vue.js 前端開發</span>
+                            <span class="track-tag">SQL Server</span>
+                            <span class="track-tag">AI & Azure 認知服務</span>
+                        </div>
+                    </div>
+                    <div class="track-card">
+                        <div class="track-title">Java 班路線</div>
+                        <div class="track-desc">
+                            以 Java 與 Spring 生態系為核心，適合想進入企業級系統、後端工程師、雲端與 DevOps 領域的人。
+                        </div>
+                        <div class="track-tags">
+                            <span class="track-tag">Java 入門＋進階</span>
+                            <span class="track-tag">Spring Boot</span>
+                            <span class="track-tag">Spring MVC</span>
+                            <span class="track-tag">Hibernate</span>
+                            <span class="track-tag">Vue.js + API 串接</span>
+                            <span class="track-tag">Azure 雲端建置</span>
+                            <span class="track-tag">Docker & Jenkins</span>
+                            <span class="track-tag">AI 圖像 / 語言實作</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 行動呼籲 / 聯絡 -->
+        <section id="contact" class="section">
+            <div class="contact-card">
+                <div>
+                    <div class="contact-text-main">
+                        今天你做出了第一個 HTML 網頁，下一步，讓我們一起把它變成能上線的完整作品。
+                    </div>
+                    <div class="contact-text-sub">
+                        在完整課程中，你會走過從基礎、專題到就業媒合的每一個階段，不再是孤單一個人摸索。
+                    </div>
+                </div>
+                <div>
+                    <!-- 這裡可以改成實際報名連結或 QR Code 圖片 -->
+                    <a href="#" class="btn-primary">了解開課資訊與報名流程 →</a>
+                </div>
+            </div>
+            <div class="footer">
+                這個頁面是示範：從體驗課學到的 HTML 出發，結合完整課程所學，你也能做出這樣的作品。
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
